@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BordasVotingMethodApp1</string>
+    <string name="heading">Borda\'s Voting Method</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm Your Vote</string>
+    <string name="preferences">Your Preferences</string>
+    <string name="bordaVote">Your Borda Vote</string>
+    <string name="numOptions">Number of Options:</string>
+    <string name="votingOptions">Voting Options:</string>
+    <string name="votingOptionsCallout">Enter all options separated by comma!</string>
+    <string name="numOfVoters">Number of Votes So Far:</string>
+    <string name="addingVote">Add a Vote</string>
+    <string name="votingResults">Show Voting Results</string>
+</resources>
