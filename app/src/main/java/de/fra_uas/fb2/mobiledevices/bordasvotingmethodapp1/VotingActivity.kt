@@ -13,9 +13,6 @@ class VotingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_voting)
 
-
-
-
     }
 
     // Function to add a single vote
@@ -28,7 +25,6 @@ class VotingActivity : AppCompatActivity() {
         view.context.startActivity(intent)
 
     }
-
 
     // Function to cancel a single vote
     fun cancelBtn(view: View) {

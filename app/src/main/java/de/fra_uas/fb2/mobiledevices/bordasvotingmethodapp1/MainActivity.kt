@@ -2,6 +2,8 @@ package de.fra_uas.fb2.mobiledevices.bordasvotingmethodapp1
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var votingOptions: EditText
     private lateinit var numOptions: EditText
     private lateinit var numOfVotesTxt: TextView
+    private var isResetting = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         numOfVotesTxt.setText(intent.getIntExtra("updatedVoteCount", 0).toString())
         numOptions.setText(intent.getStringExtra("numOptionsUpdated"))
         votingOptions.setText(intent.getStringExtra("votingOptionsUpdated"))
+
+        checkUserChangeValidation()
     }
 
 
@@ -94,6 +99,38 @@ class MainActivity : AppCompatActivity() {
         return votingOptionsArrayList;
     }
 
+    // Reset Function
+    private fun reset(message: String) {
+        isResetting = true
+        numOptions.setText("");
+        votingOptions.setText("");
+        numOfVotesTxt.text = "0";
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+        isResetting = false
+    }
+
+    // Function to check wether the user changes the settings
+    private fun checkUserChangeValidation() {
+            numOptions.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(numOfVotesTxt.text.toString().toInt() != 0 && !isResetting ) {
+                        reset("All votes resetted!")
+                    }
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+            votingOptions.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (numOfVotesTxt.text.toString().toInt() != 0 && !isResetting) {
+                        reset("All votes resetted!")
+                    }
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+    }
+
     fun addVote(view: View) {
         // If "Number Of Options" is Empty set 3 into it
         if(numOptions.text.toString().isEmpty()) {
@@ -118,10 +155,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startOverBtn(view: View) {
-        numOptions.setText("");
-        votingOptions.setText("");
-        numOfVotesTxt.setText("0");
-        Toast.makeText(applicationContext, "Starting anew!", Toast.LENGTH_LONG).show()
+        reset("Starting anew!")
     }
 }
 
