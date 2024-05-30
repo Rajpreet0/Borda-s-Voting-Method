@@ -1,9 +1,11 @@
 package de.fra_uas.fb2.mobiledevices.bordasvotingmethodapp1
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,10 +16,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var votingOptions: EditText
     private lateinit var numOptions: EditText
+    private lateinit var numOfVotesTxt: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -26,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Connect to XML
-        numOptions = findViewById(R.id.numOptionsEditTxt);
-        votingOptions = findViewById(R.id.votingOptionsEditTxt);
-
+        numOptions = findViewById<EditText>(R.id.numOptionsEditTxt);
+        votingOptions = findViewById<EditText>(R.id.votingOptionsEditTxt);
+        numOfVotesTxt = findViewById<TextView>(R.id.numOfVotesTxt);
 
         // Check number when Focus Changes
         numOptions.setOnFocusChangeListener { view, hasFocus ->
@@ -37,9 +39,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Update the Text for the Vctes Count
+        numOfVotesTxt.setText(intent.getIntExtra("updatedVoteCount", 0).toString())
     }
 
-    // Function for Number Checking
+
+    // Function for validating the Number Options
     private fun validateNumOption() {
         val numOptionsText = numOptions.text.toString();
 
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Function for validating the Options
     private fun createVotingOptionsArray(num: Int): List<String> {
 
 
@@ -92,11 +98,19 @@ class MainActivity : AppCompatActivity() {
             numOptions.setText("3")
         }
 
+        // Convert Num Options to an Integer to pass onto ArrayList
         val numOptionsNum = numOptions.text.toString().toInt()
-
-
         Log.d("ArrayList: ", createVotingOptionsArray(numOptionsNum).toString())
 
+        // Update Votes Count to 1
+        val numOfVotes = numOfVotesTxt.text.toString().toInt()+1
+
+        val intent: Intent = Intent(view.context, VotingActivity::class.java).apply {
+            putExtra("voteCount", numOfVotes)       // Pass Voters Count Value to next Activity
+        }
+
+        view.context.startActivity(intent)
+        finish()
 
     }
 

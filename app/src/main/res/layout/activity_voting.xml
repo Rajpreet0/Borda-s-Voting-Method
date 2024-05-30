@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="24dp"
+        android:onClick="cancelBtn"
         android:text="@string/cancel"
         android:textColor="@color/white"
         app:backgroundTint="@color/red"
