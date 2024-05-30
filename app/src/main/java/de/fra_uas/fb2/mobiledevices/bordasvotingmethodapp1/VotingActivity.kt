@@ -22,10 +22,11 @@ class VotingActivity : AppCompatActivity() {
     fun confirmBtn(view: View) {
         val intent: Intent = Intent(view.context, MainActivity::class.java).apply {
             putExtra("updatedVoteCount",  intent.getIntExtra("voteCount", 0))       // Pass the Votes Count back to the User
+            putExtra("numOptionsUpdated", intent.getStringExtra("numOptions"))                 // Pass numOptions for persistent data
+            putExtra("votingOptionsUpdated", intent.getStringExtra("votingOptions"))           // Pass votingOptions for persistent data
         }
         view.context.startActivity(intent)
 
-        finish()
     }
 
 

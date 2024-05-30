@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var votingOptions: EditText
     private lateinit var numOptions: EditText
     private lateinit var numOfVotesTxt: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,8 +39,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Update the Text for the Vctes Count
+        // Update the Text for the Elements
         numOfVotesTxt.setText(intent.getIntExtra("updatedVoteCount", 0).toString())
+        numOptions.setText(intent.getStringExtra("numOptionsUpdated"))
+        votingOptions.setText(intent.getStringExtra("votingOptionsUpdated"))
     }
 
 
@@ -107,12 +108,13 @@ class MainActivity : AppCompatActivity() {
         val numOfVotes = numOfVotesTxt.text.toString().toInt()+1
 
         val intent: Intent = Intent(view.context, VotingActivity::class.java).apply {
-            putExtra("voteCount", numOfVotes)       // Pass Voters Count Value to next Activity
+            putExtra("voteCount", numOfVotes)                                 // Pass Voters Count Value
+            putExtra("numOptions", numOptions.text.toString())                // Pass the Number of Options
+            putExtra("votingOptions", votingOptions.text.toString())          // Pass Voting Options
+
         }
 
         view.context.startActivity(intent)
-        finish()
-
     }
 
     fun startOverBtn(view: View) {
@@ -122,3 +124,4 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, "Starting anew!", Toast.LENGTH_LONG).show()
     }
 }
+
