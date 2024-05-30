@@ -118,6 +118,7 @@
         android:id="@+id/startOverBtn"
         android:layout_width="142dp"
         android:layout_height="54dp"
+        android:onClick="startOverBtn"
         android:text="Start Over"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
