@@ -155,6 +155,9 @@ class MainActivity : AppCompatActivity() {
         val numOptionsNum = numOptions.text.toString().toInt()
         Log.d("ArrayList: ", createVotingOptionsArray(numOptionsNum).toString())
 
+        // Convert List into ArrayList
+        val votingOptionsArray: ArrayList<String> = createVotingOptionsArray(numOptionsNum).toCollection(ArrayList<String>())
+
         // Update Votes Count to 1
         val numOfVotes: Int = numOfVotesTxt.text.toString().toInt()+1
 
@@ -164,6 +167,7 @@ class MainActivity : AppCompatActivity() {
         bundle.putInt("voteCount", numOfVotes)
         bundle.putString("numOptions", numOptions.text.toString())
         bundle.putString("votingOptions",  votingOptions.text.toString())
+        bundle.putStringArrayList("votingOptionsArray", votingOptionsArray)
         intent.putExtras(bundle)
         activityLauncher.launch(intent)
     }
