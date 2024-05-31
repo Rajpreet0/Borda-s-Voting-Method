@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var activityLauncher: ActivityResultLauncher<Intent>
     private lateinit var votingOptions: EditText
     private lateinit var numOptions: EditText
     private lateinit var numOfVotesTxt: TextView
@@ -42,12 +45,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Update the Text for the Elements
-        numOfVotesTxt.setText(intent.getIntExtra("updatedVoteCount", 0).toString())
-        numOptions.setText(intent.getStringExtra("numOptionsUpdated"))
-        votingOptions.setText(intent.getStringExtra("votingOptionsUpdated"))
+        activityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
+            if(result.resultCode == RESULT_OK){
+                val extras = result.data?.extras
+                if(extras != null) {
+                    isResetting = false
+                    // Update the Text for the Elements
+                    numOfVotesTxt.setText(extras.getInt("updatedVoteCount").toString())
+                    numOptions.setText(extras.getString("numOptionsUpdated"))
+                    votingOptions.setText(extras.getString("votingOptionsUpdated"))
 
-        checkUserChangeValidation()
+                    checkUserChangeValidation()
+                    isResetting = true
+                }
+            } else if (result.resultCode == RESULT_CANCELED) {
+            }
+        }
+
+
     }
 
 
@@ -101,34 +116,33 @@ class MainActivity : AppCompatActivity() {
 
     // Reset Function
     private fun reset(message: String) {
-        isResetting = true
-        numOptions.setText("");
+        isResetting= false
         votingOptions.setText("");
+        numOptions.setText("");
         numOfVotesTxt.text = "0";
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-        isResetting = false
     }
 
     // Function to check wether the user changes the settings
     private fun checkUserChangeValidation() {
-            numOptions.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if(numOfVotesTxt.text.toString().toInt() != 0 && !isResetting ) {
-                        reset("All votes resetted!")
-                    }
+        numOptions.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(numOfVotesTxt.text.toString().toInt() != 0 && isResetting ) {
+                    reset("All votes resetted!")
                 }
-                override fun afterTextChanged(s: Editable?) {}
-            })
-            votingOptions.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (numOfVotesTxt.text.toString().toInt() != 0 && !isResetting) {
-                        reset("All votes resetted!")
-                    }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+        votingOptions.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (numOfVotesTxt.text.toString().toInt() != 0 && isResetting) {
+                    reset("All votes resetted!")
                 }
-                override fun afterTextChanged(s: Editable?) {}
-            })
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     fun addVote(view: View) {
@@ -142,16 +156,16 @@ class MainActivity : AppCompatActivity() {
         Log.d("ArrayList: ", createVotingOptionsArray(numOptionsNum).toString())
 
         // Update Votes Count to 1
-        val numOfVotes = numOfVotesTxt.text.toString().toInt()+1
+        val numOfVotes: Int = numOfVotesTxt.text.toString().toInt()+1
 
-        val intent: Intent = Intent(view.context, VotingActivity::class.java).apply {
-            putExtra("voteCount", numOfVotes)                                 // Pass Voters Count Value
-            putExtra("numOptions", numOptions.text.toString())                // Pass the Number of Options
-            putExtra("votingOptions", votingOptions.text.toString())          // Pass Voting Options
 
-        }
-
-        view.context.startActivity(intent)
+        val intent = Intent(this, VotingActivity::class.java)
+        val bundle = Bundle();
+        bundle.putInt("voteCount", numOfVotes)
+        bundle.putString("numOptions", numOptions.text.toString())
+        bundle.putString("votingOptions",  votingOptions.text.toString())
+        intent.putExtras(bundle)
+        activityLauncher.launch(intent)
     }
 
     fun startOverBtn(view: View) {
