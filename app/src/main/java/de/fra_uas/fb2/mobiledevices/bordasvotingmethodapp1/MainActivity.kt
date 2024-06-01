@@ -102,9 +102,9 @@ class MainActivity : AppCompatActivity() {
                         // Append each line with the format "label -> score"
                         // Highlight with stars if it is the maximum score
                         if (score == maxScore) {
-                            resultBuilder.append("**** $label -> $score ****\n")
+                            resultBuilder.append("**** $label -> $score points ****\n")
                         } else {
-                            resultBuilder.append("$label -> $score\n")
+                            resultBuilder.append("$label -> $score points\n")
                         }
                     }
                 }

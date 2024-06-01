@@ -32,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="372dp"
         android:layout_height="357dp"
         android:background="@color/lightblue"
@@ -63,11 +64,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        style="@style/Divider.Horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/headingSubTxtView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
     <TextView
         android:id="@+id/headingSubTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="448dp"
+        android:layout_marginTop="460dp"
         android:text="@string/bordaVote"
         android:textColor="@color/mainColor"
         android:textFontWeight="700"
@@ -76,8 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/seekBarValueLinearLayout"
+    <ScrollView
         android:layout_width="367dp"
         android:layout_height="197dp"
         android:layout_marginTop="12dp"
@@ -87,7 +93,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headingSubTxtView">
 
-    </LinearLayout>
+         <LinearLayout
+            android:id="@+id/seekBarValueLinearLayout"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
 
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

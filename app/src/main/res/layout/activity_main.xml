@@ -59,7 +59,7 @@
         android:hint="3"
         android:inputType="text"
         android:textAlignment="center"
-        android:textColor="@color/lightGrey"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
@@ -140,6 +140,13 @@
         app:layout_constraintTop_toBottomOf="@+id/numOfVotesTxt"
         app:layout_constraintVertical_bias="0.049" />
 
+    <View
+        style="@style/Divider.Horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/votingResultSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingTxtView"
+        app:layout_constraintVertical_bias="0.96" />
+
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/votingResultSwitch"
         android:layout_width="213dp"
@@ -158,6 +165,7 @@
         android:layout_width="356dp"
         android:layout_height="222dp"
         android:background="#C2C3C0"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

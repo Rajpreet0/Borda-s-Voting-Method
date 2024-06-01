@@ -87,8 +87,8 @@ class VotingActivity : AppCompatActivity() {
             val resultTextView = TextView(this)
 
             resultTextView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
             )
 
             val option = votingOptionsList[i]
@@ -106,6 +106,7 @@ class VotingActivity : AppCompatActivity() {
             resultTextView.text =  displayText
             // Text Styles
             resultTextView.textSize = 16f
+            resultTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
             resultTextView.setTextColor(Color.BLACK)
             displayLinearLayout.addView(resultTextView)
         }
