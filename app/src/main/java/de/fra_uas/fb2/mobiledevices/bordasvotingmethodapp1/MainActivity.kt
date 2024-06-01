@@ -210,6 +210,8 @@ class MainActivity : AppCompatActivity() {
             numOptions.setText("3")
         }
 
+        validateNumOption()
+
         // Convert Num Options to an Integer to pass onto ArrayList
         val numOptionsNum = numOptions.text.toString().toInt()
 
