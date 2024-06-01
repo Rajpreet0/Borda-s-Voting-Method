@@ -25,6 +25,8 @@ class VotingActivity : AppCompatActivity() {
 
         generateSeekBars()
     }
+
+    // Function to pass Data to MainActivity
     private fun shareData(cancel: Boolean){
         val result = Intent()
         val bundle = intent.extras
@@ -36,13 +38,18 @@ class VotingActivity : AppCompatActivity() {
             Toast.makeText(this, "Vote canceled!", Toast.LENGTH_SHORT).show()
             result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount")-1)    // Pass the Votes Count back to the User decrased
         }else {
+            val votingOptionsList = bundle?.getStringArrayList("votingOptionsArray")
+            val scores = if (votingOptionsList != null) calculateBordaCount(votingOptionsList) else ArrayList()
+
             result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount"))            // Pass the Votes Count back to the User
+            result.putIntegerArrayListExtra("scores", scores)
         }
 
         setResult(RESULT_OK, result)
         finish()
     }
 
+    // Function to identify Seekbars which have the same Value
     private fun getNotUnqiueValues(): Set<Int> {
         // Create a map to count occurrences of each seekBar value
         val valueCount = HashMap<Int, Int>()
@@ -53,12 +60,28 @@ class VotingActivity : AppCompatActivity() {
         return valueCount.filter { it.value > 1 }.keys
     }
 
+    // Function to calculate the Borda Voting Values of SeekBars
+    private fun calculateBordaCount(votingOptionsList: ArrayList<String>): ArrayList<Int> {
+        val scores = ArrayList<Int>(Collections.nCopies(votingOptionsList.size, 0))
+        val sortedIndices = seekBarValues.indices.sortedByDescending { seekBarValues[it] }
+        sortedIndices.forEachIndexed { index, position ->
+            scores[position] = (votingOptionsList.size - 1 - index)
+        }
+        return scores
+    }
+
     // Display results of the seek bars
     private fun seekBarResultDisplay(votingOptionsList: ArrayList<String>) {
         val displayLinearLayout: LinearLayout = findViewById<LinearLayout>(R.id.seekBarValueLinearLayout)
         displayLinearLayout.removeAllViews()
 
-        // Iterating through the list list of voting options
+        // Calculate Borda scores
+        val scores = calculateBordaCount(votingOptionsList)
+
+        // Determine non-unique values
+        val nonUniqueValues = getNotUnqiueValues()
+
+        // Iterating through the list of voting options
         for(i in votingOptionsList.indices) {
             val resultTextView = TextView(this)
 
@@ -67,11 +90,15 @@ class VotingActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
+            val option = votingOptionsList[i]
+            val score = scores[i]
+            val value = seekBarValues[i]
+
             // Check if the current value is not unique
-            val displayText = if (seekBarValues[i] in getNotUnqiueValues()) {
-                "${votingOptionsList[i]} -> <not unique>"
+            val displayText = if (value in nonUniqueValues) {
+                "$option -> <not unique>"
             } else {
-                "${votingOptionsList[i]} -> ${seekBarValues[i]}"
+                "$option -> $score points"
             }
 
             // Set the text to display the current value of the seek bar corresponding to each option
