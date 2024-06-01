@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
         if(votingOptionsArrayListSize > num) {
             // Take only as much as the User specified
-            votingOptionsArrayList.take(num);
+            return votingOptionsArrayList.take(num);
         } else if(votingOptionsArrayListSize < num) {
             // Fill the Array with "Option i", when less Options are specified
 

@@ -36,7 +36,6 @@ class VotingActivity : AppCompatActivity() {
         finish()
     }
 
-    //TODO: ArrayList is not cut off
 
     // Display results of the seek bars
     private fun seekBarResultDisplay(votingOptionsList: ArrayList<String>) {
