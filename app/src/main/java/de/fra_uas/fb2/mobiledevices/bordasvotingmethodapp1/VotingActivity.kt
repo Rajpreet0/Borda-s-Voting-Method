@@ -43,6 +43,7 @@ class VotingActivity : AppCompatActivity() {
 
             result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount"))            // Pass the Votes Count back to the User
             result.putIntegerArrayListExtra("scores", scores)
+
         }
 
         setResult(RESULT_OK, result)

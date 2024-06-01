@@ -13,8 +13,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var votingOptions: EditText
     private lateinit var numOptions: EditText
     private lateinit var numOfVotesTxt: TextView
+    private lateinit var votingResultSwitch: SwitchCompat
+    private lateinit var resultText: TextView
+    private lateinit var votingResultsScore: ArrayList<Int>
+    private lateinit var votingOptionsArray: ArrayList<String>
     private var isResetting = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         numOptions = findViewById<EditText>(R.id.numOptionsEditTxt);
         votingOptions = findViewById<EditText>(R.id.votingOptionsEditTxt);
         numOfVotesTxt = findViewById<TextView>(R.id.numOfVotesTxt);
+        votingResultSwitch = findViewById<SwitchCompat>(R.id.votingResultSwitch)
+        resultText = findViewById<TextView>(R.id.resultTextTxt)
 
         // Check number when Focus Changes
         numOptions.setOnFocusChangeListener { view, hasFocus ->
@@ -55,6 +63,20 @@ class MainActivity : AppCompatActivity() {
                     numOptions.setText(extras.getString("numOptionsUpdated"))
                     votingOptions.setText(extras.getString("votingOptionsUpdated"))
 
+                    // Safely retrieve the scores ArrayList
+                    val scores = extras.getIntegerArrayList("scores")
+                    if (scores != null) {
+                        if (::votingResultsScore.isInitialized){
+                            votingResultsScore = ArrayList(votingResultsScore.zip(scores) { old, new -> old + new})
+                        }else {
+                            votingResultsScore = scores
+                        }
+                    }
+
+                    // Set SwitchCompact to unchecked
+                    votingResultSwitch.isChecked = false
+                    resultText.text = ""
+
                     checkUserChangeValidation()
                     isResetting = true
                 }
@@ -62,9 +84,36 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        showResult()
     }
 
+    // Function to show the Results from Voting
+    private fun showResult() {
+        votingResultSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val resultBuilder = StringBuilder()
+                // Determine the maximum score for highlighting
+                val maxScore = votingResultsScore.maxOrNull()
+
+                // Iterate over the voting options and their scores
+                for ((index, score) in votingResultsScore.withIndex()) {
+                    if (index < votingOptionsArray.size) {
+                        val label = votingOptionsArray[index]
+                        // Append each line with the format "label -> score"
+                        // Highlight with stars if it is the maximum score
+                        if (score == maxScore) {
+                            resultBuilder.append("**** $label -> $score ****\n")
+                        } else {
+                            resultBuilder.append("$label -> $score\n")
+                        }
+                    }
+                }
+                resultText.text = resultBuilder.toString()
+            } else {
+                resultText.text = ""
+            }
+        }
+    }
 
     // Function for validating the Number Options
     private fun validateNumOption() {
@@ -153,10 +202,9 @@ class MainActivity : AppCompatActivity() {
 
         // Convert Num Options to an Integer to pass onto ArrayList
         val numOptionsNum = numOptions.text.toString().toInt()
-        Log.d("ArrayList: ", createVotingOptionsArray(numOptionsNum).toString())
 
         // Convert List into ArrayList
-        val votingOptionsArray: ArrayList<String> = createVotingOptionsArray(numOptionsNum).toCollection(ArrayList<String>())
+        votingOptionsArray = createVotingOptionsArray(numOptionsNum).toCollection(ArrayList<String>())
 
         // Update Votes Count to 1
         val numOfVotes: Int = numOfVotesTxt.text.toString().toInt()+1
