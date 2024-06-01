@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
                     // Safely retrieve the scores ArrayList
                     val scores = extras.getIntegerArrayList("scores")
                     if (scores != null) {
-                        if (::votingResultsScore.isInitialized){
-                            votingResultsScore = ArrayList(votingResultsScore.zip(scores) { old, new -> old + new})
-                        }else {
+                        if (!::votingResultsScore.isInitialized || votingResultsScore.isEmpty()){
                             votingResultsScore = scores
+                        }else {
+                            votingResultsScore = ArrayList(votingResultsScore.zip(scores) { old, new -> old + new})
                         }
                     }
 
@@ -165,11 +165,21 @@ class MainActivity : AppCompatActivity() {
 
     // Reset Function
     private fun reset(message: String) {
-        isResetting= false
-        votingOptions.setText("");
-        numOptions.setText("");
-        numOfVotesTxt.text = "0";
+        isResetting = true  // Set to true to prevent trigger from text changes during reset
+
+        // Reset all text fields and scores
+        numOfVotesTxt.text = "0"
+        votingResultsScore.clear()
+        votingOptionsArray.clear()
+
+        // Reset UI elements
+        votingResultSwitch.isChecked = false
+        resultText.text = ""
+
+        // Show a reset message to the user
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+
+        isResetting = false  // Reset complete, allow text changes to trigger
     }
 
     // Function to check wether the user changes the settings
