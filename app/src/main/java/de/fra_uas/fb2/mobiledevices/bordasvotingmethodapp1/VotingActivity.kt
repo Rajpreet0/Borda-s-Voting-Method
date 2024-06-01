@@ -25,13 +25,19 @@ class VotingActivity : AppCompatActivity() {
 
         generateSeekBars()
     }
-    private fun shareData(){
+    private fun shareData(cancel: Boolean){
         val result = Intent()
         val bundle = intent.extras
 
-        result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount"))               // Pass the Votes Count back to the User
-        result.putExtra("numOptionsUpdated", bundle.getString("numOptions"))            // Pass numOptions for persistent data
-        result.putExtra("votingOptionsUpdated", bundle.getString("votingOptions"))      // Pass votingOptions for persistent data
+        result.putExtra("numOptionsUpdated", bundle?.getString("numOptions"))            // Pass numOptions for persistent data
+        result.putExtra("votingOptionsUpdated", bundle?.getString("votingOptions"))      // Pass votingOptions for persistent data
+
+        if(cancel) {
+            Toast.makeText(this, "Vote canceled!", Toast.LENGTH_SHORT).show()
+            result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount")-1)    // Pass the Votes Count back to the User decrased
+        }else {
+            result.putExtra("updatedVoteCount", bundle!!.getInt("voteCount"))            // Pass the Votes Count back to the User
+        }
 
         setResult(RESULT_OK, result)
         finish()
@@ -133,18 +139,12 @@ class VotingActivity : AppCompatActivity() {
         if(getNotUnqiueValues().isNotEmpty()){
             Toast.makeText(this, "Values are not unique", Toast.LENGTH_SHORT).show()
         }else {
-            shareData();
+            shareData(false)
         }
     }
 
     // Function to cancel a single vote
-    // TODO: Fix the Cancel Button
     fun cancelBtn(view: View) {
-        val intent: Intent = Intent(view.context, MainActivity::class.java).apply {
-            putExtra("updatedVoteCount",  (intent.getIntExtra("voteCount", 0)-1))   // Pass the Votes Count back to the User but decreased
-        }
-        view.context.startActivity(intent)
-
-        finish()
+        shareData(true)
     }
 }
