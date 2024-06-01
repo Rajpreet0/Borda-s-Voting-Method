@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -36,12 +37,19 @@ class VotingActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun getNotUnqiueValues(): Set<Int> {
+        // Create a map to count occurrences of each seekBar value
+        val valueCount = HashMap<Int, Int>()
+        seekBarValues.forEach{value ->
+            valueCount[value] = valueCount.getOrDefault(value, 0) +1
+        }
+
+        return valueCount.filter { it.value > 1 }.keys
+    }
 
     // Display results of the seek bars
     private fun seekBarResultDisplay(votingOptionsList: ArrayList<String>) {
         val displayLinearLayout: LinearLayout = findViewById<LinearLayout>(R.id.seekBarValueLinearLayout)
-
-
         displayLinearLayout.removeAllViews()
 
         // Iterating through the list list of voting options
@@ -53,8 +61,15 @@ class VotingActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
+            // Check if the current value is not unique
+            val displayText = if (seekBarValues[i] in getNotUnqiueValues()) {
+                "${votingOptionsList[i]} -> <not unique>"
+            } else {
+                "${votingOptionsList[i]} -> ${seekBarValues[i]}"
+            }
+
             // Set the text to display the current value of the seek bar corresponding to each option
-            resultTextView.text = "${votingOptionsList[i]} -> ${seekBarValues[i]}"
+            resultTextView.text =  displayText
             // Text Styles
             resultTextView.textSize = 16f
             resultTextView.setTextColor(Color.BLACK)
@@ -115,7 +130,11 @@ class VotingActivity : AppCompatActivity() {
 
     // Function to add a single vote
     fun confirmBtn(view: View) {
-        shareData();
+        if(getNotUnqiueValues().isNotEmpty()){
+            Toast.makeText(this, "Values are not unique", Toast.LENGTH_SHORT).show()
+        }else {
+            shareData();
+        }
     }
 
     // Function to cancel a single vote
