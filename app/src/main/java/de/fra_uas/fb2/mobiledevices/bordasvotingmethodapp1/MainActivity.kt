@@ -1,10 +1,10 @@
 package de.fra_uas.fb2.mobiledevices.bordasvotingmethodapp1
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var numOfVotesTxt: TextView
     private lateinit var votingResultSwitch: SwitchCompat
     private lateinit var resultText: TextView
-    private lateinit var votingResultsScore: ArrayList<Int>
+    private var votingResultsScore: ArrayList<Int> = arrayListOf()
     private lateinit var votingOptionsArray: ArrayList<String>
     private var isResetting = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     // Safely retrieve the scores ArrayList
                     val scores = extras.getIntegerArrayList("scores")
                     if (scores != null) {
-                        if (!::votingResultsScore.isInitialized || votingResultsScore.isEmpty()){
+                        if (votingResultsScore.isEmpty()){
                             votingResultsScore = scores
                         }else {
                             votingResultsScore = ArrayList(votingResultsScore.zip(scores) { old, new -> old + new})
@@ -118,13 +118,19 @@ class MainActivity : AppCompatActivity() {
     private fun validateNumOption() {
         val numOptionsText = numOptions.text.toString();
 
+        // Get Minimum and Maximum Values from Settings
+        val sharedPreferences: SharedPreferences = getSharedPreferences("SettingsSharedPreferences", 0)
+
+        val minScore: String? = sharedPreferences.getString("minScore", "2")
+        val maxScore: String? = sharedPreferences.getString("maxScore", "10")
+
         // If the Field is not Empty then check Condition
         if (numOptionsText.isNotEmpty()){
             val numOptionsNum = numOptionsText.toInt()
-            if(numOptionsNum < 2 ) {
-                numOptions.setText("2")
-            }else if(numOptionsNum > 10) {
-                numOptions.setText("10")
+            if(numOptionsNum < minScore!!.toInt()) {
+                numOptions.setText(minScore)
+            }else if(numOptionsNum > maxScore!!.toInt()) {
+                numOptions.setText(maxScore)
             }
         }
     }

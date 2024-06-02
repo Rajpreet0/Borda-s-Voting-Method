@@ -3,7 +3,6 @@ package de.fra_uas.fb2.mobiledevices.bordasvotingmethodapp1
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
