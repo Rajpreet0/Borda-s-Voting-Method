@@ -234,5 +234,10 @@ class MainActivity : AppCompatActivity() {
     fun startOverBtn(view: View) {
         reset("Starting anew!")
     }
+
+    fun settingsBtn(view: View) {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
 }
 

@@ -36,6 +36,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|top"
+                    android:contentDescription="@string/settings"
+                    android:padding="18dp"
+                    android:onClick="settingsBtn"
+                    app:layout_collapseMode="pin"
+                    app:srcCompat="@drawable/cog"
+                    tools:ignore="RtlHardcoded" />
+
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -151,7 +164,7 @@
                 android:layout_width="142dp"
                 android:layout_height="54dp"
                 android:onClick="startOverBtn"
-                android:text="Start Over"
+                android:text="@string/start_over"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.045"
