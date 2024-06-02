@@ -78,13 +78,14 @@ class MainActivity : AppCompatActivity() {
                     resultText.text = ""
 
                     checkUserChangeValidation()
+                    showResult()
                     isResetting = true
                 }
             } else if (result.resultCode == RESULT_CANCELED) {
             }
         }
 
-        showResult()
+
     }
 
     // Function to show the Results from Voting
