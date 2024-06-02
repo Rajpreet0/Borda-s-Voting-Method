@@ -9,14 +9,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
@@ -141,9 +139,9 @@ class MainActivity : AppCompatActivity() {
             mutableListOf() // Create an empty MutableList if the input is blank
         } else {
             rawInput.split(",")         // Splits the strings into substrings
-                    .map { it.trim() }             // Removes leading and trailing whitespaces on every item in the list
-                    .filter { it.isNotEmpty() }    // Filter Function removes any empty strings from the list
-                    .toMutableList()               // Conversion to MutableList
+                .map { it.trim() }             // Removes leading and trailing whitespaces on every item in the list
+                .filter { it.isNotEmpty() }    // Filter Function removes any empty strings from the list
+                .toMutableList()               // Conversion to MutableList
         }
 
         // Getting the Size of the Array

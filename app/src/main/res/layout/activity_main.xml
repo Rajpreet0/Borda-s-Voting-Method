@@ -1,175 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:backgroundTint="#000000"
-    android:padding="5sp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/headingTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:text="@string/heading"
-        android:textColor="@color/mainColor"
-        android:textFontWeight="700"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/numOptionsTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/numOptions"
-        android:textColor="@color/darkGrey"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
-
-    <TextView
-        android:id="@+id/votingOptionsTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/votingOptions"
-        android:textColor="@color/darkGrey"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numOptionsTxtView"
-        app:layout_constraintVertical_bias="0.031" />
-
-    <EditText
-        android:id="@+id/numOptionsEditTxt"
-        android:layout_width="53dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="41dp"
-        android:ems="10"
-        android:hint="3"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headingTxtView"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/votingOptionsEditTxt"
-        android:layout_width="376dp"
-        android:layout_height="104dp"
-        android:background="#FDF5B9"
-        android:ems="10"
-        android:hint="@string/votingOptionsCallout"
-        android:inputType="text"
-        android:padding="10dip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headingTxtView"
-        app:layout_constraintVertical_bias="0.233" />
-
-    <TextView
-        android:id="@+id/numOfVotesTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/numOfVoters"
-        android:textColor="@color/darkGrey"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
-        app:layout_constraintVertical_bias="0.062" />
-
-    <TextView
-        android:id="@+id/numOfVotesTxt"
-        android:layout_width="155dp"
-        android:layout_height="24dp"
-        android:background="@color/yellow"
-        android:textAlignment="center"
-        android:text="0"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textFontWeight="700"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
-        app:layout_constraintStart_toEndOf="@+id/numOfVotesTxtView"
-        app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
-        app:layout_constraintVertical_bias="0.062" />
-
-    <Button
-        android:id="@+id/startOverBtn"
-        android:layout_width="142dp"
-        android:layout_height="54dp"
-        android:onClick="startOverBtn"
-        android:text="Start Over"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numOfVotesTxt"
-        app:layout_constraintVertical_bias="0.05" />
-
-    <Button
-        android:id="@+id/addVoteBtn"
-        android:layout_width="138dp"
-        android:layout_height="54dp"
-        android:onClick="addVote"
-        android:text="@string/addingVote"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
-        app:layout_constraintStart_toEndOf="@+id/startOverBtn"
-        app:layout_constraintTop_toBottomOf="@+id/numOfVotesTxt"
-        app:layout_constraintVertical_bias="0.049" />
-
-    <View
-        style="@style/Divider.Horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/votingResultSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headingTxtView"
-        app:layout_constraintVertical_bias="0.96" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/votingResultSwitch"
-        android:layout_width="213dp"
-        android:layout_height="50dp"
-        android:text="@string/votingResults"
-        android:textColor="@color/lightGrey"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
-        app:layout_constraintVertical_bias="0.371" />
-
-    <TextView
-        android:id="@+id/resultTextTxt"
-        android:layout_width="356dp"
-        android:layout_height="222dp"
-        android:background="#C2C3C0"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/votingResultSwitch" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <TextView
+                    android:id="@+id/headingTxtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/heading"
+                    android:textColor="@color/mainColor"
+                    android:textFontWeight="700"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#000000"
+            android:padding="5sp"
+            tools:context=".MainActivity">
+
+
+            <TextView
+                android:id="@+id/numOptionsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/numOptions"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.062"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.028" />
+
+            <TextView
+                android:id="@+id/votingOptionsTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/votingOptions"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.044"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numOptionsTxtView"
+                app:layout_constraintVertical_bias="0.031" />
+
+            <EditText
+                android:id="@+id/numOptionsEditTxt"
+                android:layout_width="53dp"
+                android:layout_height="57dp"
+                android:ems="10"
+                android:hint="3"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.96"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.001" />
+
+            <EditText
+                android:id="@+id/votingOptionsEditTxt"
+                android:layout_width="376dp"
+                android:layout_height="104dp"
+                android:background="#FDF5B9"
+                android:ems="10"
+                android:hint="@string/votingOptionsCallout"
+                android:inputType="text"
+                android:padding="10dip"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/main"
+                app:layout_constraintVertical_bias="0.182" />
+
+            <TextView
+                android:id="@+id/numOfVotesTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/numOfVoters"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.058"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
+                app:layout_constraintVertical_bias="0.062" />
+
+            <TextView
+                android:id="@+id/numOfVotesTxt"
+                android:layout_width="155dp"
+                android:layout_height="24dp"
+                android:background="@color/yellow"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textFontWeight="700"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.615"
+                app:layout_constraintStart_toEndOf="@+id/numOfVotesTxtView"
+                app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
+                app:layout_constraintVertical_bias="0.062" />
+
+            <Button
+                android:id="@+id/startOverBtn"
+                android:layout_width="142dp"
+                android:layout_height="54dp"
+                android:onClick="startOverBtn"
+                android:text="Start Over"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.045"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numOfVotesTxt"
+                app:layout_constraintVertical_bias="0.05" />
+
+            <Button
+                android:id="@+id/addVoteBtn"
+                android:layout_width="138dp"
+                android:layout_height="54dp"
+                android:onClick="addVote"
+                android:text="@string/addingVote"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.862"
+                app:layout_constraintStart_toEndOf="@+id/startOverBtn"
+                app:layout_constraintTop_toBottomOf="@+id/numOfVotesTxt"
+                app:layout_constraintVertical_bias="0.049" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/votingResultSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.96" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/votingResultSwitch"
+                android:layout_width="213dp"
+                android:layout_height="50dp"
+                android:text="@string/votingResults"
+                android:textColor="@color/lightGrey"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/votingOptionsEditTxt"
+                app:layout_constraintVertical_bias="0.371" />
+
+            <TextView
+                android:id="@+id/resultTextTxt"
+                android:layout_width="356dp"
+                android:layout_height="222dp"
+                android:background="#C2C3C0"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.518"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/votingResultSwitch"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
