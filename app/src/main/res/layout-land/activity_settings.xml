@@ -74,8 +74,8 @@
                 android:id="@+id/minVotingTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/minVotingOption"
                 android:textColor="@color/darkGrey"
                 android:textSize="18sp"
@@ -116,11 +116,25 @@
                 app:layout_constraintTop_toBottomOf="@id/maxVotingTxt"
                 app:layout_constraintWidth_percent="0.9" />
 
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/votingMethodSwitch"
+                android:layout_width="213dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/votingMethod"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.076"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maxVotingSettingsEditText" />
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="68dp"
                 android:onClick="saveSettingsBtn"
                 android:text="@string/save"
                 app:layout_constraintEnd_toEndOf="parent"
