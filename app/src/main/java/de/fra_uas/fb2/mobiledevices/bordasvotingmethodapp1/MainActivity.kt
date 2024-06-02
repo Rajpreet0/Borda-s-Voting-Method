@@ -175,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         // Reset all text fields and scores
         numOfVotesTxt.text = "0"
         votingResultsScore.clear()
-        votingOptionsArray.clear()
 
         // Reset UI elements
         votingResultSwitch.isChecked = false
@@ -238,7 +237,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startOverBtn(view: View) {
-        reset("Starting anew!")
+            reset("Starting anew!")
     }
 
     fun settingsBtn(view: View) {
