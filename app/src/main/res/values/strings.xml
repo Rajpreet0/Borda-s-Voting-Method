@@ -18,4 +18,5 @@
     <string name="editTxtMinVoting">Enter minimum votes</string>
     <string name="editTxtMaxVoting">Enter maximum votes</string>
     <string name="save">Save</string>
+    <string name="votingMethod">Use Exact Values</string>
 </resources>
