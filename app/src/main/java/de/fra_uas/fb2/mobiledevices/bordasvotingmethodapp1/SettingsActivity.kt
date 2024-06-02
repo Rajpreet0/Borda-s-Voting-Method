@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,6 +17,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var minVotingSettingsEditText: EditText
     private lateinit var maxVotingSettingsEditText: EditText
+    private lateinit var votingMethodSwitch: SwitchCompat
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +34,13 @@ class SettingsActivity : AppCompatActivity() {
         // Connect to XML
         minVotingSettingsEditText = findViewById<EditText>(R.id.minVotingSettingsEditText)
         maxVotingSettingsEditText = findViewById<EditText>(R.id.maxVotingSettingsEditText)
+        votingMethodSwitch = findViewById<SwitchCompat>(R.id.votingMethodSwitch)
 
-        getMinMaxDate()
+        getSettingsData()
     }
 
     // Function to retrieve Data from SettingsSharedPreferences File
-    private fun getMinMaxDate() {
+    private fun getSettingsData() {
         val minScore: String? = sharedPreferences.getString("minScore", "2")
         val maxScore: String? = sharedPreferences.getString("maxScore", "10")
 
@@ -49,6 +52,9 @@ class SettingsActivity : AppCompatActivity() {
             minVotingSettingsEditText.setText(minScore)
             maxVotingSettingsEditText.setText(maxScore)
         }
+
+        // Get the Data
+        votingMethodSwitch.isChecked = sharedPreferences.getBoolean("useExactValues", false)
     }
 
     // Function to update Values in SettingsSharedPreferences File
@@ -58,6 +64,7 @@ class SettingsActivity : AppCompatActivity() {
         // Correctly extracting the text from EditText fields
         val minScoreString = minVotingSettingsEditText.text.toString().trim()
         val maxScoreString = maxVotingSettingsEditText.text.toString().trim()
+        val useExactValues = votingMethodSwitch.isChecked
 
         // Validation for votingOptions Number
         when {
@@ -85,6 +92,7 @@ class SettingsActivity : AppCompatActivity() {
 
         editor.putString("minScore", minScoreString)
         editor.putString("maxScore", maxScoreString)
+        editor.putBoolean("useExactValues", useExactValues)
         editor.apply()
 
         Toast.makeText(this, "Settings saved !", Toast.LENGTH_SHORT).show()
